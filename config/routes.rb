@@ -2,6 +2,7 @@ Avril::Application.routes.draw do
 
   match 'connect/callback' => 'connect#callback', via: :get
   resources :connect
+  resources :friends
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
