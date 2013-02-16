@@ -3,13 +3,13 @@ class FriendsController < ApplicationController
     @province_hash = get_province
     cursor = 0
     @counter = 0  # 总人数
-    @h = Hash.new
+    @provinces = Hash.new
+    @genders = Hash.new(0)
     begin
       res = get_friends(cursor)
       cursor += 200
       analyze(res)
     end while res["next_cursor"] > 0
-    return @res = @h
   end
 
   def get_friends(cursor = 0)
@@ -46,11 +46,12 @@ class FriendsController < ApplicationController
   def analyze(res)
     # 这里写得好丑= =!
     res["users"].each do |user|
-      if @h[get_name(user["province"])].nil?
-        @h[get_name(user["province"])] = 1
+      if @provinces[get_name(user["province"])].nil?
+        @provinces[get_name(user["province"])] = 1
       else
-        @h[get_name(user["province"])] += 1
+        @provinces[get_name(user["province"])] += 1
       end
+      @genders[user["gender"]] += 1
       @counter += 1
     end
   end
