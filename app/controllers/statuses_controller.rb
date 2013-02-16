@@ -2,6 +2,7 @@ class StatusesController < ApplicationController
   def index
     page = 1
     @counter = 0  # 总人数
+    @statuses = Array.new
     begin
       res = get_statuses(page)
       page += 1
@@ -29,6 +30,7 @@ class StatusesController < ApplicationController
   def analyze(res)
     # 这里写得好丑= =!
     res["statuses"].each do |status|
+      @statuses << [status["text"], status["created_at"]]
       @counter += 1
     end
   end

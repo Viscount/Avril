@@ -1,4 +1,8 @@
 <%= @res %>
-<%= @provinces %>
+<% @statuses.each do |status| %>
+  <br/>
+  <li><%=status[0]%></li>
+  <li><%=status[1]%></li>
+<% end %>
 <%= @genders %>
 <%= @counter %>
