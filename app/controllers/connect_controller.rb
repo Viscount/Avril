@@ -1,6 +1,13 @@
 # CLIENT_ID 什么的都在 config/initializers/weibo.rb 里
 class ConnectController < ApplicationController
+  before_filter :connected_user, except: [:new, :callback]
   def index
+    uri = URI("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&screen_name=greenmoon55") 
+    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new uri.request_uri
+      response = http.request request # Net::HTTPResponse object
+      @res = JSON.parse(response.body)
+    end
   end
   
   # 请求授权
@@ -11,25 +18,18 @@ class ConnectController < ApplicationController
   # 新浪重定向到这个地址，然后我们把新浪发过来到code参数发过去...
   # 就可以获取access_token
   def callback
-    code = params[:code]
-    #redirect_to "https://api.weibo.com/oauth2/access_token?client_id=#{CLIENT_ID}&client_secret=#{CLIENT_SECRET}&grant_type=authorization_code&redirect_uri=#{REDIRECT_URI}&code=#{code}"
     uri = URI("https://api.weibo.com/oauth2/access_token")
     req = Net::HTTP::Post.new(uri.path)
-    req.set_form_data('client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => code)
+    req.set_form_data('client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => params['code'])
     access_token = ''
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      res = http.request(req)
-      response = JSON.parse(res.body)
-      access_token = response['access_token']
-      session['access_token'] = access_token
-    end
-    uri = URI("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&screen_name=greenmoon55") 
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request # Net::HTTPResponse object
-      @res = JSON.parse(response.body)
-    end
+    https = Net::HTTP.new(uri.host, uri.port) 
+    https.use_ssl = true if uri.scheme == 'https'
+    res = https.request(req)
+    response = JSON.parse(res.body)
+    session['access_token']= response['access_token']
+    @res = response
   end
+
   def followers
     uri = URI("https://api.weibo.com/2/friendships/followers.json?access_token=#{session['access_token']}&screen_name=greenmoon55&count=200")
     res = ''
@@ -47,5 +47,14 @@ class ConnectController < ApplicationController
       response = http.request request # Net::HTTPResponse object
       res2 = JSON.parse(response.body)
     end
+  end
+
+  def get_token_info
+    uri = URI("https://api.weibo.com/oauth2/get_token_info")
+#http = Net::Http::Post.new(
+  end
+
+  def connected_user
+    redirect_to new_connect_path if session['access_token'].nil?
   end
 end
