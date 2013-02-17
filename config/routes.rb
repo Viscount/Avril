@@ -4,6 +4,7 @@ Avril::Application.routes.draw do
   resources :connect
   resources :friends
   match 'statuses/all' => 'statuses#all', via: :get
+  match 'statuses/time' => 'statuses#time', via: :get
   resources :statuses
   # The priority is based upon order of creation:
   # first created -> highest priority.

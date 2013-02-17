@@ -1,5 +1,7 @@
 # CLIENT_ID 什么的都在 config/initializers/weibo.rb 里
 class ConnectController < ApplicationController
+  def index
+  end
   
   # 请求授权
   def new

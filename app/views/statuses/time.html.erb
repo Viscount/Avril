@@ -1,0 +1,9 @@
+<%= @res %>
+<% @statuses.each do |status| %>
+  <li><%=status%></li>
+<% end %>
+<%= @text %>
+<%= @counter %>
+<%= link_to @max_comments_count_weibo, "http://api.weibo.com/2/statuses/go?uid=1065896203&id=#{@max_comments_count_weibo.to_s}" %>
+<%= link_to @max_reposts_count_weibo, "http://api.weibo.com/2/statuses/go?uid=1065896203&id=#{@max_reposts_count_weibo.to_s}" %>
+<%= link_to @max_attitudes_count_weibo, "http://api.weibo.com/2/statuses/go?uid=1065896203&id=#{@max_attitudes_count_weibo.to_s}" %>
