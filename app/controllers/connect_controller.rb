@@ -17,7 +17,8 @@ class ConnectController < ApplicationController
     response = post("https://api.weibo.com/oauth2/access_token", p)
     session['access_token']= response['access_token']
     session['uid']= response['uid']
-    @res = response
+    #@res = response
+    redirect_to connect_index_path
   end
 
   # 暂时没用到
