@@ -2,7 +2,7 @@
 class ConnectController < ApplicationController
   before_filter :connected_user, except: [:new, :callback]
   def index
-    get_token_info
+    @res = get("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&uid=#{session['uid']}")
   end
   
   # 请求授权
@@ -16,6 +16,7 @@ class ConnectController < ApplicationController
     p = {'client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => params['code']}
     response = post("https://api.weibo.com/oauth2/access_token", p)
     session['access_token']= response['access_token']
+    session['uid']= response['uid']
     @res = response
   end
 
@@ -37,11 +38,6 @@ class ConnectController < ApplicationController
       response = http.request request # Net::HTTPResponse object
       res2 = JSON.parse(response.body)
     end
-  end
-
-  def get_token_info
-    @res = post("https://api.weibo.com/oauth2/get_token_info", 'access_token' => session['access_token'])
-#http = Net::Http::Post.new(
   end
 
   def connected_user
