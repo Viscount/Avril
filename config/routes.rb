@@ -1,5 +1,5 @@
 Avril::Application.routes.draw do
-
+  root to: 'connect#index'
   match 'connect/callback' => 'connect#callback', via: :get
   resources :connect
   resources :friends
