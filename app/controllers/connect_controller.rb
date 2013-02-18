@@ -18,14 +18,17 @@ class ConnectController < ApplicationController
   # 新浪重定向到这个地址，然后我们把新浪发过来到code参数发过去...
   # 就可以获取access_token
   def callback
+    p = {'client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => params['code']}
+    response = post("https://api.weibo.com/oauth2/access_token", p)
+=begin
     uri = URI("https://api.weibo.com/oauth2/access_token")
     req = Net::HTTP::Post.new(uri.path)
     req.set_form_data('client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => params['code'])
-    access_token = ''
     https = Net::HTTP.new(uri.host, uri.port) 
     https.use_ssl = true if uri.scheme == 'https'
     res = https.request(req)
     response = JSON.parse(res.body)
+=end
     session['access_token']= response['access_token']
     @res = response
   end
