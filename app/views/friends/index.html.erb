@@ -2,3 +2,17 @@
 <%= @genders %>
 <%= @counter %>
 <%= @res %>
+<% @users_by_statuses.each do |user|%>
+  <p>
+    <%= user['screen_name'] %>
+    状态数
+    <%= user['statuses_count'] %>
+  </p>
+<% end %>
+<% @users_by_followers.each do |user|%>
+  <p>
+    <%= user['screen_name'] %>
+    粉丝数
+    <%= user['followers_count'] %>
+  </p>
+<% end %>

@@ -6,11 +6,16 @@ class FriendsController < ApplicationController
     @counter = 0  # 总人数
     @provinces = Hash.new(0)
     @genders = Hash.new(0)
+    @users = Array.new
     begin
       res = get_friends(cursor)
       cursor += 200
       analyze(res)
     end while res["next_cursor"] > 0
+    @users_by_statuses = @users.sort {|a, b| 
+      b['statuses_count'] <=> a['statuses_count']}
+    @users_by_followers = @users.sort {|a, b| 
+      b['followers_count'] <=> a['followers_count']}
   end
 
   def get_friends(cursor = 0)
@@ -36,6 +41,7 @@ class FriendsController < ApplicationController
       @provinces[get_name(user["province"])] += 1
       @genders[user["gender"]] += 1
       @counter += 1
+      @users << user.select { |k,v| k == 'screen_name' || k == 'statuses_count' || k == 'followers_count'}
     end
   end
 end
