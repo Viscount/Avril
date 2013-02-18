@@ -1,23 +1,9 @@
 class StatusesController < ApplicationController
   def index
-    uri = URI("https://api.weibo.com/2/statuses/go.json?id=5958567199&uid=1065896203&access_token=2.00PS5IKBOwXVSB346c3ea479BMKhuD") 
-    res = ''
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request
-      res = JSON.parse(response.body)
-    end
   end
 
   def get_statuses(page = 1)
-    uri = URI("https://api.weibo.com/2/statuses/user_timeline.json?access_token=#{session['access_token']}&screen_name=greenmoon55&count=100&page=#{page}") 
-    res = ''
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request
-      res = JSON.parse(response.body)
-    end
-    return res
+    get("https://api.weibo.com/2/statuses/user_timeline.json?access_token=#{session['access_token']}&count=100&page=#{page}") 
   end
 
   def analyze(res)

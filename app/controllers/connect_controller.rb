@@ -2,7 +2,7 @@
 class ConnectController < ApplicationController
   before_filter :connected_user, except: [:new, :callback]
   def index
-    @res = get("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&screen_name=greenmoon55") 
+    get_token_info
   end
   
   # 请求授权
@@ -19,6 +19,7 @@ class ConnectController < ApplicationController
     @res = response
   end
 
+  # 暂时没用到
   def followers
     uri = URI("https://api.weibo.com/2/friendships/followers.json?access_token=#{session['access_token']}&screen_name=greenmoon55&count=200")
     res = ''
@@ -39,7 +40,7 @@ class ConnectController < ApplicationController
   end
 
   def get_token_info
-    uri = URI("https://api.weibo.com/oauth2/get_token_info")
+    @res = post("https://api.weibo.com/oauth2/get_token_info", 'access_token' => session['access_token'])
 #http = Net::Http::Post.new(
   end
 

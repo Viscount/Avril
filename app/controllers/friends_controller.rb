@@ -13,27 +13,14 @@ class FriendsController < ApplicationController
   end
 
   def get_friends(cursor = 0)
-    uri = URI("https://api.weibo.com/2/friendships/friends.json?access_token=#{session['access_token']}&screen_name=greenmoon55&count=200&cursor=#{cursor}") 
-    res = ''
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request
-      res = JSON.parse(response.body)
-    end
-    return res
+    get("https://api.weibo.com/2/friendships/friends.json?access_token=#{session['access_token']}&screen_name=greenmoon55&count=200&cursor=#{cursor}") 
   end
 
   # 获取省份id对应名字的列表
   def get_province
-    uri = URI("https://api.weibo.com/2/common/get_province.json?access_token=#{session['access_token']}&country=001") 
-    res = ''
+    res = get("https://api.weibo.com/2/common/get_province.json?access_token=#{session['access_token']}&country=001") 
     h = Hash.new
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request
-      res = JSON.parse(response.body)
-      res.each {|x| h.merge!(x)}
-    end
+    res.each {|x| h.merge!(x)}
     return h
   end
 
