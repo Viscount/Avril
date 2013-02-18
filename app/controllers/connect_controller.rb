@@ -2,12 +2,7 @@
 class ConnectController < ApplicationController
   before_filter :connected_user, except: [:new, :callback]
   def index
-    uri = URI("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&screen_name=greenmoon55") 
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request # Net::HTTPResponse object
-      @res = JSON.parse(response.body)
-    end
+    @res = get("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&screen_name=greenmoon55") 
   end
   
   # 请求授权
@@ -20,15 +15,6 @@ class ConnectController < ApplicationController
   def callback
     p = {'client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => params['code']}
     response = post("https://api.weibo.com/oauth2/access_token", p)
-=begin
-    uri = URI("https://api.weibo.com/oauth2/access_token")
-    req = Net::HTTP::Post.new(uri.path)
-    req.set_form_data('client_id' => "#{CLIENT_ID}", 'client_secret' => "#{CLIENT_SECRET}", 'grant_type' => 'authorization_code', 'redirect_uri' => REDIRECT_URI, 'code' => params['code'])
-    https = Net::HTTP.new(uri.host, uri.port) 
-    https.use_ssl = true if uri.scheme == 'https'
-    res = https.request(req)
-    response = JSON.parse(res.body)
-=end
     session['access_token']= response['access_token']
     @res = response
   end
