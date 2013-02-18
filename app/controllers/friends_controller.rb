@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  before_filter :connected_user
   def index
     @province_hash = get_province
     cursor = 0

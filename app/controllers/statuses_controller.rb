@@ -1,4 +1,5 @@
 class StatusesController < ApplicationController
+  before_filter :connected_user
   def index
     time
   end

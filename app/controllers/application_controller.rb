@@ -17,4 +17,7 @@ class ApplicationController < ActionController::Base
     res = http.request(req)
     response = JSON.parse(res.body)
   end
+  def connected_user
+    redirect_to new_connect_path if session['access_token'].nil?
+  end
 end

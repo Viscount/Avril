@@ -39,8 +39,4 @@ class ConnectController < ApplicationController
       res2 = JSON.parse(response.body)
     end
   end
-
-  def connected_user
-    redirect_to new_connect_path if session['access_token'].nil?
-  end
 end
