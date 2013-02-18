@@ -3,7 +3,7 @@ class FriendsController < ApplicationController
     @province_hash = get_province
     cursor = 0
     @counter = 0  # 总人数
-    @provinces = Hash.new
+    @provinces = Hash.new(0)
     @genders = Hash.new(0)
     begin
       res = get_friends(cursor)
@@ -24,20 +24,15 @@ class FriendsController < ApplicationController
     return h
   end
 
-  # 改成完整的id
+  # 根据id获取省份名称
   def get_name(raw_id)
     new_id = "0010" + raw_id
     @province_hash[new_id]
   end
 
   def analyze(res)
-    # 这里写得好丑= =!
     res["users"].each do |user|
-      if @provinces[get_name(user["province"])].nil?
-        @provinces[get_name(user["province"])] = 1
-      else
-        @provinces[get_name(user["province"])] += 1
-      end
+      @provinces[get_name(user["province"])] += 1
       @genders[user["gender"]] += 1
       @counter += 1
     end

@@ -1,5 +1,6 @@
 class StatusesController < ApplicationController
   def index
+    time
   end
 
   def get_statuses(page = 1)
@@ -28,6 +29,7 @@ class StatusesController < ApplicationController
   def time
     @max_reposts_count = 0
     @max_comments_count = 0
+    @max_attitudes_count = 0
     @text = ''
     page = 1
     @statuses = Array.new(24){0}
@@ -43,15 +45,18 @@ class StatusesController < ApplicationController
       @statuses[status["created_at"].split[3][0..1].to_i] += 1
       if status["reposts_count"] > @max_reposts_count
         @max_reposts_count = status["reposts_count"]
-        @max_reposts_count_weibo = status["id"]
+        @max_reposts_count_weibo = status
+        @max_reposts_count_id = status["id"]
       end
       if status["comments_count"] > @max_comments_count
         @max_comments_count = status["comments_count"]
-        @max_comments_count_weibo = status["id"]
+        @max_comments_count_weibo = status
+        @max_comments_count_id = status["id"]
       end
-      if status["attitudes_count"] > @max_comments_count
+      if status["attitudes_count"] > @max_attitudes_count
         @max_attitudes_count = status["attitudes_count"]
-        @max_attitudes_count_weibo = status["id"]
+        @max_attitudes_count_weibo = status
+        @max_attitudes_count_id = status["id"]
       end
     end
   end

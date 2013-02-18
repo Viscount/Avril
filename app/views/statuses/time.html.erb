@@ -1,9 +1,17 @@
-<%= @res %>
-<% @statuses.each do |status| %>
-  <li><%=status%></li>
+<% @statuses.each_index do |i| %>
+  <li><%=i%>时至<%=i+1%>时 <%=@statuses[i]%>个</li>
 <% end %>
 <%= @text %>
 <%= @counter %>
-<%= link_to @max_comments_count_weibo, "http://api.weibo.com/2/statuses/go?uid=1065896203&id=#{@max_comments_count_weibo.to_s}" %>
-<%= link_to @max_reposts_count_weibo, "http://api.weibo.com/2/statuses/go?uid=1065896203&id=#{@max_reposts_count_weibo.to_s}" %>
-<%= link_to @max_attitudes_count_weibo, "http://api.weibo.com/2/statuses/go?uid=1065896203&id=#{@max_attitudes_count_weibo.to_s}" %>
+<p>
+  评论最多
+  <%=@max_comments_count_weibo['text']%><%=@max_comments_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_comments_count_id.to_s) %>
+</p>
+<p>
+  转发最多
+  <%=@max_reposts_count_weibo['text']%><%=@max_reposts_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_reposts_count_id.to_s) %>
+</p>
+<p>
+被赞最多
+  <%=@max_attitudes_count_weibo['text']%><%=@max_attitudes_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_attitudes_count_id.to_s) %>
+</p>
