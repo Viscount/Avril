@@ -33,11 +33,13 @@ class StatusesController < ApplicationController
     @text = ''
     page = 1
     @statuses = Array.new(24){0}
+    res = ''
     begin
       res = get_statuses(page)
       page += 1
       analyze_time(res)
     end while res["total_number"] > (page - 1) * 100
+    @first_status = res["statuses"][-1]
   end
   
   def analyze_time(res)

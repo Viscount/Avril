@@ -15,3 +15,5 @@
 被赞最多
   <%=@max_attitudes_count_weibo['text']%><%=@max_attitudes_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_attitudes_count_id.to_s) %>
 </p>
+<p>第一条微博
+<%= @first_status['text']%> 发表于 <%= @first_status['created_at'] %> <%= link_to '查看', go(session['uid'], @first_status['id'].to_s) %>
