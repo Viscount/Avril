@@ -46,17 +46,17 @@ class StatusesController < ApplicationController
   def analyze_time(res)
     res["statuses"].each do |status|
       @statuses[status["created_at"].split[3][0..1].to_i] += 1
-      if status["reposts_count"] > @max_reposts_count
+      if status["reposts_count"] >= @max_reposts_count
         @max_reposts_count = status["reposts_count"]
         @max_reposts_count_weibo = status
         @max_reposts_count_id = status["id"]
       end
-      if status["comments_count"] > @max_comments_count
+      if status["comments_count"] >= @max_comments_count
         @max_comments_count = status["comments_count"]
         @max_comments_count_weibo = status
         @max_comments_count_id = status["id"]
       end
-      if status["attitudes_count"] > @max_attitudes_count
+      if status["attitudes_count"] >= @max_attitudes_count
         @max_attitudes_count = status["attitudes_count"]
         @max_attitudes_count_weibo = status
         @max_attitudes_count_id = status["id"]
