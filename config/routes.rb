@@ -6,6 +6,7 @@ Avril::Application.routes.draw do
   match 'statuses/all' => 'statuses#all', via: :get
   match 'statuses/time' => 'statuses#time', via: :get
   resources :statuses
+  resources :followers
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

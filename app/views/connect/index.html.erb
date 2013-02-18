@@ -1,6 +1,7 @@
 欢迎<%=@res['screen_name'] %>
 注册于 <%= @res['created_at'] %>
 <ul>
-  <li><%= link_to '关注用户分析', friends_path %></li>
+  <li><%= link_to '分析我关注的人', friends_path %></li>
+  <li><%= link_to '分析关注我的人', followers_path %></li>
   <li><%= link_to '微博分析', statuses_path %></li>
 </ul>

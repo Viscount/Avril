@@ -1,4 +1,4 @@
-class FriendsController < ApplicationController
+class FollowersController < ApplicationController
   before_filter :connected_user
   def index
     @province_hash = get_province
@@ -7,14 +7,14 @@ class FriendsController < ApplicationController
     @provinces = Hash.new(0)
     @genders = Hash.new(0)
     begin
-      res = get_friends(cursor)
+      res = get_followers(cursor)
       cursor += 200
       analyze(res)
     end while res["next_cursor"] > 0
   end
 
-  def get_friends(cursor = 0)
-    get("https://api.weibo.com/2/friendships/friends.json?access_token=#{session['access_token']}&uid=#{session['uid']}&count=200&cursor=#{cursor}") 
+  def get_followers(cursor = 0)
+    get("https://api.weibo.com/2/friendships/followers.json?access_token=#{session['access_token']}&uid=#{session['uid']}&count=200&cursor=#{cursor}") 
   end
 
   # 获取省份id对应名字的列表
