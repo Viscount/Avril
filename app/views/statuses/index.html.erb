@@ -17,3 +17,11 @@
 </p>
 <p>第一条微博
 <%= @first_status['text']%> 发表于 <%= @first_status['created_at'] %> <%= link_to '查看', go(session['uid'], @first_status['id'].to_s) %>
+<br>
+<%- #为什么不用each呢？因为可能某个月没发状态%>
+<% for m in @first_month..@last_month do %>
+<p>
+  <%= m / 12%>年 <%= m%12 + 1 %>月 <%= @times[m] %>
+</p>
+<% end %>
+

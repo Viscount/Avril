@@ -28,6 +28,7 @@ class StatusesController < ApplicationController
   end
 
   def time
+    @times = Hash.new(0)
     @max_reposts_count = 0
     @max_comments_count = 0
     @max_attitudes_count = 0
@@ -41,6 +42,9 @@ class StatusesController < ApplicationController
       analyze_time(res)
     end while res["total_number"] > (page - 1) * 100
     @first_status = res["statuses"][-1]
+    @last_month = Time.now.year * 12 + Time.now.month-1
+    time = DateTime.strptime(@first_status['created_at'], '%a %b %e %T %z %Y')
+    @first_month = time.year * 12 + time.month-1
   end
   
   def analyze_time(res)
@@ -61,6 +65,8 @@ class StatusesController < ApplicationController
         @max_attitudes_count_weibo = status
         @max_attitudes_count_id = status["id"]
       end
+      datetime = DateTime.strptime(status["created_at"], '%a %b %e %T %z %Y')
+      @times[datetime.year * 12 + datetime.month-1] += 1
     end
   end
 end
