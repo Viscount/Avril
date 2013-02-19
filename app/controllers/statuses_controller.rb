@@ -45,6 +45,8 @@ class StatusesController < ApplicationController
     @last_month = Time.now.year * 12 + Time.now.month-1
     time = DateTime.strptime(@first_status['created_at'], '%a %b %e %T %z %Y')
     @first_month = time.year * 12 + time.month-1
+    @total_days = (Time.now - time).to_i / 1.day
+    @counter = res["total_number"]
   end
   
   def analyze_time(res)

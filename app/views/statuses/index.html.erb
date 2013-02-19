@@ -2,7 +2,6 @@
   <li><%=i%>时至<%=i+1%>时 <%=@statuses[i]%>个</li>
 <% end %>
 <%= @text %>
-<%= @counter %>
 <p>
   评论最多
   <%=@max_comments_count_weibo['text']%><%=@max_comments_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_comments_count_id.to_s) %>
@@ -24,4 +23,5 @@
   <%= m / 12%>年 <%= m%12 + 1 %>月 <%= @times[m] %>
 </p>
 <% end %>
-
+<%= @total_days %>
+每日状态数<%= (@counter.to_f / @total_days).round(2) %>
