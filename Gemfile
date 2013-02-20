@@ -21,6 +21,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'morrisjs-rails' # 生成图表
+gem 'raphael-rails' # 貌似也是画图用的，必须得有。。
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
