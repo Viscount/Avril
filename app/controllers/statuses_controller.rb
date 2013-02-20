@@ -35,11 +35,14 @@ class StatusesController < ApplicationController
     @text = ''
     page = 1
     @statuses = Array.new(24){0}
+    @source = Hash.new
+    @source.default = 0
     res = ''
     begin
       res = get_statuses(page)
       page += 1
       analyze_time(res)
+      analyze_source(res)
     end while res["total_number"] > (page - 1) * 100
     @first_status = res["statuses"][-1]
     @last_month = Time.now.year * 12 + Time.now.month-1
@@ -69,6 +72,16 @@ class StatusesController < ApplicationController
       end
       datetime = DateTime.strptime(status["created_at"], '%a %b %e %T %z %Y')
       @times[datetime.year * 12 + datetime.month-1] += 1
+    end
+  end
+
+  def analyze_source(res)
+    res["statuses"].each do |status|
+      if @source.has_key?(status["source"])
+       @source[status["source"]] += 1
+      else
+       @source.store(status["source"],1)
+      end
     end
   end
 end

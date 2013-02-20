@@ -25,3 +25,10 @@
 <% end %>
 <%= @total_days %>
 每日状态数<%= (@counter.to_f / @total_days).round(2) %>
+
+<p>
+来源
+	<% @source.each_pair do |k,v| %>
+	<li><%= raw(k) %> <%= v %>次</li>
+	<% end %>
+</p>
