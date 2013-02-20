@@ -1,4 +1,16 @@
-<div id="hours" style="height: 300px;"> </div>
+
+<div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-tabs nav-stacked">
+        <li><a tabindex="-1" href="#">活跃时段</a></li>
+        <li><a tabindex="-1" href="#">最爱用什么上微博</a></li>
+        <li><a tabindex="-1" href="#">评论我最多</a></li>
+        <li><a tabindex="-1" href="#">@我最多</a></li>
+    </ul>
+      </div>
+      <div class="span9">
+
+      <div id="hours" style="height: 300px;"> </div>
 <script>
 Morris.Bar({
   element: 'hours',
@@ -38,7 +50,11 @@ Morris.Bar({
 
 <p>
 来源
-	<% @source.each_pair do |k,v| %>
-	<li><%= raw(k) %> <%= v %>次</li>
-	<% end %>
+  <% @source.each_pair do |k,v| %>
+  <li><%= raw(k) %> <%= v %>次</li>
+  <% end %>
 </p>
+  
+
+      </div>
+</div>
