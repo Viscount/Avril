@@ -1,4 +1,10 @@
-<%= @provinces %>
+<div id="provinces" style="height: 500px;"> </div>
+<script>
+Morris.Donut({
+  element: 'provinces',
+  data: <%= to_morris_data(@provinces) %>
+})
+</script>
 <%= @genders %>
 <%= @counter %>
 <%= @res %>
