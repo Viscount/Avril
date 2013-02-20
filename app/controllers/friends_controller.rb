@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class FriendsController < ApplicationController
   before_filter :connected_user
   def index
@@ -16,6 +17,14 @@ class FriendsController < ApplicationController
       b['statuses_count'] <=> a['statuses_count']}
     @users_by_followers = @users.sort {|a, b| 
       b['followers_count'] <=> a['followers_count']}
+
+    @provinces['其他'] = @provinces[nil]
+    @provinces.delete(nil)
+
+    @genders['男'] = @genders['m']
+    @genders['女'] = @genders['f']
+    @genders.delete('m');
+    @genders.delete('f');
   end
 
   def get_friends(cursor = 0)

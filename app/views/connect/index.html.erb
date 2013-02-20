@@ -4,3 +4,14 @@
   <li><%= link_to '分析关注我的人', followers_path %></li>
   <li><%= link_to '微博分析', statuses_path %></li>
 </ul>
+<% @a = [0, 1, 2, 3]%>
+<div id='test' style='height:500px;width:300px'></div>
+<script>
+Morris.Bar({
+  element: 'test',
+  data: <%= array_to_morris_data(@a) %>,
+  xkey: 'key',
+  ykeys: ['value'],
+  labels: ['tweets']
+});
+</script>

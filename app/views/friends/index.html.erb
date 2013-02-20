@@ -1,5 +1,15 @@
-<%= @provinces %>
-<%= @genders %>
+<div id="provinces" style="height: 300px;"> </div>
+<div id="genders" style="height: 300px;"> </div>
+<script>
+Morris.Donut({
+  element: 'provinces',
+  data: <%= to_morris_data(@provinces) %>
+})
+Morris.Donut({
+  element: 'genders',
+  data: <%= to_morris_data(@genders) %>
+})
+</script>
 <%= @counter %>
 <%= @res %>
 <% @users_by_statuses.each do |user|%>
