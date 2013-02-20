@@ -1,3 +1,13 @@
+<div id="hours" style="height: 300px;"> </div>
+<script>
+Morris.Bar({
+  element: 'hours',
+  data: <%= array_to_morris_data(@statuses) %>,
+  xkey: 'key',
+  ykeys: ['value'],
+  labels: ['数量']
+});
+</script>
 <% @statuses.each_index do |i| %>
   <li><%=i%>时至<%=i+1%>时 <%=@statuses[i]%>个</li>
 <% end %>
