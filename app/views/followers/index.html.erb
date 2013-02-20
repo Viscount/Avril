@@ -1,4 +1,15 @@
-<div id="provinces" style="height: 500px;"> </div>
+
+<div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-tabs nav-stacked">
+  			<li><a tabindex="-1" href="#">省份分布</a></li>
+  			<li><a tabindex="-1" href="#">男女比例</a></li>
+  			<li><a tabindex="-1" href="#">关系最密切</a></li>
+		</ul>
+      </div>
+      <div class="span9">
+
+      	<div id="provinces" style="height: 500px;"> </div>
 <script>
 Morris.Donut({
   element: 'provinces',
@@ -8,3 +19,6 @@ Morris.Donut({
 <%= @genders %>
 <%= @counter %>
 <%= @res %>
+
+      </div>
+</div>

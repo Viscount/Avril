@@ -1,4 +1,15 @@
-<div id="provinces" style="height: 300px;"> </div>
+
+<div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-tabs nav-stacked">
+        <li><a tabindex="-1" href="#">省份分布</a></li>
+        <li><a tabindex="-1" href="#">男女比例</a></li>
+        <li><a tabindex="-1" href="#">发布微博最多</a></li>
+        <li><a tabindex="-1" href="#">拥有粉丝最多</a></li>
+    </ul>
+      </div>
+      <div class="span9">
+          <div id="provinces" style="height: 300px;"> </div>
 <div id="genders" style="height: 300px;"> </div>
 <script>
 Morris.Donut({
@@ -26,3 +37,6 @@ Morris.Donut({
     <%= user['followers_count'] %>
   </p>
 <% end %>
+
+      </div>
+</div>

@@ -7,8 +7,37 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="">Avril</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              
+  				<li><%= link_to '分析我关注的人', friends_path %></li>
+  				<li><%= link_to '分析我的粉丝', followers_path %></li>
+  				<li><%= link_to '我的微博分析', statuses_path %></li>
 
+              
+                
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
 <%= yield %>
-
+</div>
+<footer class="footer">
+      <div class="container">
+        <p>Designed and built by <a herf="http://www.weibo.com/greenmoon55">greenmoon55</a> , <a herf="http://www.weibo.com/surep">EthanSure</a> and <a herf="">Viscount</a></p>
+        
+      </div>
+ </footer>
 </body>
 </html>
