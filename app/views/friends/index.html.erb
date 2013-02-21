@@ -24,35 +24,43 @@ Morris.Donut({
 <%= @counter %>
 <%= @res %>
 <% @users_by_statuses.each do |user|%>
-  <p class='user_statuses'>
+  <p class='user-by-status-count'>
     <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
     <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
     状态数
     <%= user['statuses_count'] %>
   </p>
 <% end %>
-<div id="page-selection">
-</div>
+<div id="status-page"></div>
 <% @users_by_followers.each do |user|%>
-  <p class='user_followers'>
+  <p class='user-by-follower-count'>
     <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
     <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
     粉丝数
     <%= user['followers_count'] %>
   </p>
 <% end %>
-
+<div id="follower-page"></div>
       </div>
 </div>
 <div id='user_statuses_content'>
 </div>
 <script>
-  $('#page-selection').bootpag({
+  $('#status-page').bootpag({
       total: <%= (@counter / 10.0).ceil %>
   }).on("page", function(event, num){
-      $(".user_statuses").css("display","none");
-      $(".user_statuses").slice((num-1)*10, num*10).css("display","");
+      $(".user-by-status-count").css("display","none");
+      $(".user-by-status-count").slice((num-1)*10, num*10).css("display","");
   });
-      $(".user_statuses").css("display","none");
-      $(".user_statuses").slice(0, 10).css("display","");
+  $(".user-by-status-count").css("display","none");
+  $(".user-by-status-count").slice(0, 10).css("display","");
+
+  $('#follower-page').bootpag({
+      total: <%= (@counter / 10.0).ceil %>
+  }).on("page", function(event, num){
+      $(".user-by-follower-count").css("display","none");
+      $(".user-by-follower-count").slice((num-1)*10, num*10).css("display","");
+  });
+  $(".user-by-follower-count").css("display","none");
+  $(".user-by-follower-count").slice(0, 10).css("display","");
 </script>
