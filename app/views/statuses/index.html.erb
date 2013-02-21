@@ -11,10 +11,26 @@
       <div class="span9">
 
       <div id="hours" style="height: 300px;"> </div>
+      <div id="months" style="height: 300px;"> </div>
+      <div id="sources" style="height: 300px;"> </div>
 <script>
 Morris.Bar({
   element: 'hours',
   data: <%= array_to_morris_data(@statuses) %>,
+  xkey: 'key',
+  ykeys: ['value'],
+  labels: ['微博数']
+});
+Morris.Bar({
+  element: 'months',
+  data: <%= months_to_morris_data(@first_month, @last_month, @times) %>,
+  xkey: 'key',
+  ykeys: ['value'],
+  labels: ['微博数']
+});
+Morris.Donut({
+  element: 'sources',
+  data: <%= to_morris_data(@source) %>,
   xkey: 'key',
   ykeys: ['value'],
   labels: ['微博数']
@@ -35,12 +51,6 @@ Morris.Bar({
 <p>第一条微博
   <%= render partial: 'weibo', locals: { weibo: @first_status } %>
 <br>
-<%- #为什么不用each呢？因为可能某个月没发状态%>
-<% for m in @first_month..@last_month do %>
-<p>
-  <%= m / 12%>年 <%= m%12 + 1 %>月 <%= @times[m] %>
-</p>
-<% end %>
 <%= @total_days %>
 每日状态数<%= (@counter.to_f / @total_days).round(2) %>
 
@@ -50,7 +60,5 @@ Morris.Bar({
   <li><%= raw(k) %> <%= v %>次</li>
   <% end %>
 </p>
-  
-
       </div>
 </div>

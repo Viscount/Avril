@@ -73,6 +73,8 @@ class StatusesController < ApplicationController
 
   def analyze_source(res)
     res["statuses"].each do |status|
+      # 如果画图的话需要删除tag..不知到要不要加这个功能
+      status["source"].gsub!(/<.+?>/,'')
       if @source.has_key?(status["source"])
        @source[status["source"]] += 1
       else
