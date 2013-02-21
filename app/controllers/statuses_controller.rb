@@ -2,16 +2,48 @@ class StatusesController < ApplicationController
   before_filter :connected_user
   def index
     time
+    comments
+    mentions
   end
 
   def get_statuses(page = 1)
     get("https://api.weibo.com/2/statuses/user_timeline.json?access_token=#{session['access_token']}&count=100&page=#{page}") 
   end
 
+  def get_comments(page = 1)
+    get("https://api.weibo.com/2/comments/to_me.json?access_token=#{session['access_token']}&count=100&page=#{page}")
+  end
+
+  def get_mentions(page = 1)
+    get("https://api.weibo.com/2/comments/mentions.json?access_token=#{session['access_token']}&count=100&page=#{page}")
+  end
+
   def analyze(res)
     res["statuses"].each do |status|
       @statuses << [status["text"], status["created_at"]]
       @counter += 1
+    end
+  end
+
+  def analyze_comment(res)
+    res["comments"].each do |comments|
+      user = comments["user"]
+      if @comment_count.has_key?(user["screen_name"])
+       @comment_count[user["screen_name"]] += 1
+      else
+       @comment_count.store(user["screen_name"],1)
+      end
+    end
+  end
+
+  def analyze_mention(res)
+    res["comments"].each do |comments|
+      user = comments["user"]
+      if @mention_count.has_key?(user["screen_name"])
+        @mention_count[user["screen_name"]] += 1
+      else
+        @mention_count.store(user["screen_name"],1)
+      end
     end
   end
 
@@ -25,6 +57,42 @@ class StatusesController < ApplicationController
       page += 1
       analyze(res)
     end while res["total_number"] > (page - 1) * 100
+  end
+
+  def comments
+    @max_comments_user = 0
+    @comment_count = Hash.new
+    page = 1
+    res = ''
+    begin
+      res = get_comments(page)
+      page += 1
+      analyze_comment(res)
+    end while res["total_number"] > (page - 1) * 100
+    @comment_count.each_pair do |k,v|
+      if v > @max_comments_user 
+        @max_comments_user = v
+        @max_comments_user_name = k
+      end
+    end
+  end
+
+  def mentions
+    @max_mentions_user = 0
+    @mention_count = Hash.new
+    page = 1
+    res = ''
+    begin
+      res = get_mentions(page)
+      page += 1
+      analyze_mention(res)
+    end while res["total_number"] > (page - 1) * 100
+    @mention_count.each_pair do |k,v|
+      if v > @max_mentions_user
+        @max_mentions_user = v
+        @max_mentions_user_name = k
+      end
+    end
   end
 
   def time
