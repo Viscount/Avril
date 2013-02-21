@@ -1,13 +1,1 @@
 注册于 <%= @res['created_at'] %>
-
-<% @a = [0, 1, 2, 3]%>
-<div id='test' style='height:500px;width:300px'></div>
-<script>
-Morris.Bar({
-  element: 'test',
-  data: <%= array_to_morris_data(@a) %>,
-  xkey: 'key',
-  ykeys: ['value'],
-  labels: ['tweets']
-});
-</script>

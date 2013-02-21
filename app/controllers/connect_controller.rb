@@ -17,27 +17,6 @@ class ConnectController < ApplicationController
     response = post("https://api.weibo.com/oauth2/access_token", p)
     session['access_token']= response['access_token']
     session['uid']= response['uid']
-    #@res = response
     redirect_to connect_index_path
-  end
-
-  # 暂时没用到
-  def followers
-    uri = URI("https://api.weibo.com/2/friendships/followers.json?access_token=#{session['access_token']}&screen_name=greenmoon55&count=200")
-    res = ''
-    Net::HTTP.start(uri.host, uri.port,
-      :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request # Net::HTTPResponse object
-      res = JSON.parse(response.body)
-    end
-    uri = URI("https://api.weibo.com/2/friendships/friends.json?access_token=#{session['access_token']}&uid=1065896203&count=200")
-    res2 = ''
-    Net::HTTP.start(uri.host, uri.port,
-      :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
-      response = http.request request # Net::HTTPResponse object
-      res2 = JSON.parse(response.body)
-    end
   end
 end

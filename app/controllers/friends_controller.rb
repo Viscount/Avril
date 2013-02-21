@@ -50,7 +50,8 @@ class FriendsController < ApplicationController
       @provinces[get_name(user["province"])] += 1
       @genders[user["gender"]] += 1
       @counter += 1
-      @users << user.select { |k,v| k == 'screen_name' || k == 'statuses_count' || k == 'followers_count'}
+      @users << user
+#      @users << user.select { |k,v| k == 'screen_name' || k == 'statuses_count' || k == 'followers_count' || k == 'profile_url'}
     end
   end
 end
