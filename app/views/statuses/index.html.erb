@@ -17,27 +17,23 @@ Morris.Bar({
   data: <%= array_to_morris_data(@statuses) %>,
   xkey: 'key',
   ykeys: ['value'],
-  labels: ['数量']
+  labels: ['微博数']
 });
 </script>
-<% @statuses.each_index do |i| %>
-  <li><%=i%>时至<%=i+1%>时 <%=@statuses[i]%>个</li>
-<% end %>
-<%= @text %>
 <p>
   评论最多
-  <%=@max_comments_count_weibo['text']%><%=@max_comments_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_comments_count_id.to_s) %>
+  <%= render partial: 'weibo', locals: { weibo: @max_comments_count_weibo } %>
 </p>
 <p>
   转发最多
-  <%=@max_reposts_count_weibo['text']%><%=@max_reposts_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_reposts_count_id.to_s) %>
+  <%= render partial: 'weibo', locals: { weibo: @max_reposts_count_weibo} %>
 </p>
 <p>
 被赞最多
-  <%=@max_attitudes_count_weibo['text']%><%=@max_attitudes_count_weibo['created_at']%><%= link_to '更多', go(session['uid'], @max_attitudes_count_id.to_s) %>
+  <%= render partial: 'weibo', locals: { weibo: @max_attitudes_count_weibo} %>
 </p>
 <p>第一条微博
-<%= @first_status['text']%> 发表于 <%= @first_status['created_at'] %> <%= link_to '查看', go(session['uid'], @first_status['id'].to_s) %>
+  <%= render partial: 'weibo', locals: { weibo: @first_status } %>
 <br>
 <%- #为什么不用each呢？因为可能某个月没发状态%>
 <% for m in @first_month..@last_month do %>

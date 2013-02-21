@@ -33,7 +33,8 @@ Morris.Donut({
 <% end %>
 <% @users_by_followers.each do |user|%>
   <p>
-    <%= user['screen_name'] %>
+    <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
+    <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
     粉丝数
     <%= user['followers_count'] %>
   </p>

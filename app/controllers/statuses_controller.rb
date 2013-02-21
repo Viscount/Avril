@@ -32,7 +32,6 @@ class StatusesController < ApplicationController
     @max_reposts_count = 0
     @max_comments_count = 0
     @max_attitudes_count = 0
-    @text = ''
     page = 1
     @statuses = Array.new(24){0}
     @source = Hash.new
@@ -58,17 +57,14 @@ class StatusesController < ApplicationController
       if status["reposts_count"] >= @max_reposts_count
         @max_reposts_count = status["reposts_count"]
         @max_reposts_count_weibo = status
-        @max_reposts_count_id = status["id"]
       end
       if status["comments_count"] >= @max_comments_count
         @max_comments_count = status["comments_count"]
         @max_comments_count_weibo = status
-        @max_comments_count_id = status["id"]
       end
       if status["attitudes_count"] >= @max_attitudes_count
         @max_attitudes_count = status["attitudes_count"]
         @max_attitudes_count_weibo = status
-        @max_attitudes_count_id = status["id"]
       end
       datetime = DateTime.strptime(status["created_at"], '%a %b %e %T %z %Y')
       @times[datetime.year * 12 + datetime.month-1] += 1
