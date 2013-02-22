@@ -1,74 +1,95 @@
-
 <div class="row">
-      <div class="span3 bs-docs-sidebar">
-        <ul class="nav nav-tabs nav-stacked">
-        <li><a tabindex="-1" href="#">活跃时段</a></li>
-        <li><a tabindex="-1" href="#">最爱用什么上微博</a></li>
-        <li><a tabindex="-1" href="#">评论我最多</a></li>
-        <li><a tabindex="-1" href="#">@我最多</a></li>
+  <div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-tabs nav-stacked affix nav-left">
+      <li><a tabindex="-1" href="#活跃时段">活跃时段</a></li>
+      <li><a tabindex="-1" href="#每月微博数">每月微博数</a></li>
+      <li><a tabindex="-1" href="#微博来源统计">最爱用什么上微博</a></li>
+      <li><a tabindex="-1" href="#评论最多">评论最多</a></li>
+      <li><a tabindex="-1" href="#转发最多">转发最多</a></li>
+      <li><a tabindex="-1" href="#被赞最多">被赞最多</a></li>
+      <li><a tabindex="-1" href="#第一条">第一条微博</a></li>
+      <li><a tabindex="-1" href="#每日状态数">每日状态数</a></li>
+      <li><a tabindex="-1" href="#谁最关心我">谁最关心我</a></li>
     </ul>
-      </div>
-      <div class="span9">
-
-      <div id="hours" style="height: 300px;"> </div>
-      <div id="months" style="height: 300px;"> </div>
+  </div>
+  <div class="span9">
+    <section id="活跃时段">
+      <div class="page-header"><h1>活跃时段</h1></div>
+      <div id="hours" class="chart"> </div>
+    </section>
+    <section id="每月微博数">
+      <div class="page-header"><h1>每月微博数</h1></div>
+      <div id="months" class="chart"> </div>
+    </section>
+    <section id="微博来源统计">
+      <div class="page-header"><h1>微博来源统计</h1></div>
       <div id="sources" style="height: 300px;"> </div>
-<script>
-Morris.Bar({
-  element: 'hours',
-  data: <%= array_to_morris_data(@statuses) %>,
-  xkey: 'key',
-  ykeys: ['value'],
-  labels: ['微博数']
-});
-Morris.Bar({
-  element: 'months',
-  data: <%= months_to_morris_data(@first_month, @last_month, @times) %>,
-  xkey: 'key',
-  ykeys: ['value'],
-  labels: ['微博数']
-});
-Morris.Donut({
-  element: 'sources',
-  data: <%= to_morris_data(@source) %>,
-  xkey: 'key',
-  ykeys: ['value'],
-  labels: ['微博数']
-});
-</script>
-<p>
-  评论最多
-  <%= render partial: 'weibo', locals: { weibo: @max_comments_count_weibo } %>
-</p>
-<p>
-  转发最多
-  <%= render partial: 'weibo', locals: { weibo: @max_reposts_count_weibo} %>
-</p>
-<p>
-被赞最多
-  <%= render partial: 'weibo', locals: { weibo: @max_attitudes_count_weibo} %>
-</p>
-<p>第一条微博
-  <%= render partial: 'weibo', locals: { weibo: @first_status } %>
-<br>
-您已经注册微博<%= @total_days %>天
-平均每日状态数<%= (@counter.to_f / @total_days).round(2) %>
-
-<ul class="source-list">
-来源
-  <% @source_raw.each do |k| %>
-  <li><%= raw(k[0]) %> <%= k[1] %>次</li>
-  <% end %>
-</ul>
-
-<p>
-评论我最多
-  <%= link_to @max_comments_user['screen_name'],"http://weibo.com/#{@max_comments_user['profile_url']}" %>
-  <%= @max_comments_user_count %>次
-@我最多
-  <%= link_to @max_mentions_user['screen_name'],"http://weibo.com/#{@max_mentions_user['profile_url']}" %>
-<%= @max_mentions_user_count %>次  
-</p>
-  
-      </div>
+      <ul class="source-list">
+        <% @source_raw.each do |k| %>
+        <li><%= raw(k[0]) %> <%= k[1] %>次</li>
+        <% end %>
+      </ul>
+    </section>
+    <section id="评论最多">
+      <div class="page-header"><h1>评论最多的微博</h1></div>
+      <p>
+        <%= render partial: 'weibo', locals: { weibo: @max_comments_count_weibo } %>
+      </p>
+    </section>
+    <section id="转发最多">
+      <div class="page-header"><h1>转发最多的微博</h1></div>
+      <p>
+        <%= render partial: 'weibo', locals: { weibo: @max_reposts_count_weibo} %>
+      </p>
+    </section>
+    <section id="被赞最多">
+      <div class="page-header"><h1>被赞最多的微博</h1></div>
+      <p>
+        <%= render partial: 'weibo', locals: { weibo: @max_attitudes_count_weibo} %>
+      </p>
+    </section>
+    <section id="第一条">
+      <div class="page-header"><h1>第一条微博</h1></div>
+      <%= render partial: 'weibo', locals: { weibo: @first_status } %>
+    </section>
+    <section id="每日状态数">
+      <div class="page-header"><h1>每日状态数</h1></div>
+      您已经注册微博<%= @total_days %>天
+      平均每日状态数<%= (@counter.to_f / @total_days).round(2) %>
+    </section>
+    <section id="谁最关心我">
+      <div class="page-header"><h1>谁最关心我</h1></div>
+      <h2>评论我最多</h2>
+        <%= link_to image_tag(@max_comments_user['profile_image_url']), "http://weibo.com/#{@max_comments_user['profile_url']}" %>
+        <%= link_to @max_comments_user['screen_name'],"http://weibo.com/#{@max_comments_user['profile_url']}" %>
+        <%= @max_comments_user_count %>次
+      <h2>@我最多</h2>
+        <%= link_to image_tag(@max_mentions_user['profile_image_url']), "http://weibo.com/#{@max_mentions_user['profile_url']}" %>
+        <%= link_to @max_mentions_user['screen_name'],"http://weibo.com/#{@max_mentions_user['profile_url']}" %>
+      <%= @max_mentions_user_count %>次  
+    </section>
+    </div>
 </div>
+<script>
+  Morris.Bar({
+    element: 'hours',
+    data: <%= array_to_morris_data(@statuses) %>,
+    xkey: 'key',
+    ykeys: ['value'],
+    labels: ['微博数']
+  });
+  Morris.Bar({
+    element: 'months',
+    data: <%= months_to_morris_data(@first_month, @last_month, @times) %>,
+    xkey: 'key',
+    ykeys: ['value'],
+    labels: ['微博数']
+  });
+  Morris.Donut({
+    element: 'sources',
+    data: <%= to_morris_data(@source) %>,
+    xkey: 'key',
+    ykeys: ['value'],
+    labels: ['微博数']
+  });
+</script>
