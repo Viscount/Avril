@@ -17,6 +17,8 @@ class FriendsController < ApplicationController
       b['statuses_count'] <=> a['statuses_count']}
     @users_by_followers = @users.sort {|a, b| 
       b['followers_count'] <=> a['followers_count']}
+    @users_by_created_at = @users.sort {|a, b| 
+      DateTime.strptime(a['created_at'], '%a %b %e %T %z %Y') <=> DateTime.strptime(b['created_at'], '%a %b %e %T %z %Y')}
 
     @provinces['其他'] = @provinces[nil]
     @provinces.delete(nil)

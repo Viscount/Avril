@@ -26,6 +26,11 @@
       data: <%= to_morris_data(@genders) %>
     })
     </script>
+    <% @users_by_created_at.each do |user| %>
+      <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail",:target => "_blank" %>>
+  <li class="span4"> <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
+      <%= user['created_at'] %>
+    <% end %>
     <section id="users-by-status">
       <div class="page-header"><h1>用户发布微博数量排名</h1></div>
       <% index = 0 %>
