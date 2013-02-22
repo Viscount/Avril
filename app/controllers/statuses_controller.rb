@@ -4,6 +4,8 @@ class StatusesController < ApplicationController
     time
     comments
     mentions
+    @source_raw = @source_raw.sort {|a,b| b[1] <=> a[1] }
+    @close_friends = @close_friends.sort {|a,b| b[1] <=> a[1] }
   end
 
   def get_statuses(page = 1)
@@ -28,6 +30,7 @@ class StatusesController < ApplicationController
   def analyze_comment(res)
     res["comments"].each do |comments|
       user = comments["user"]
+      @close_friends[user] += 1
       if @comment_count.has_key?(user)
        @comment_count[user] += 1
       else
@@ -39,13 +42,7 @@ class StatusesController < ApplicationController
   def analyze_mention(res)
     res["comments"].each do |comments|
       user = comments["user"]
-=begin
-      if @mention_count.has_key?(user["screen_name"])
-        @mention_count[user["screen_name"]] += 1
-      else
-        @mention_count.store(user["screen_name"],1)
-      end
-=end
+      @close_friends[user] += 1
       if @mention_count.has_key?(user)
         @mention_count[user] += 1
       else
@@ -112,6 +109,7 @@ class StatusesController < ApplicationController
     @source_raw = Hash.new(0)
     @source = Hash.new
     @source.default = 0
+    @close_friends = Hash.new(0)
     res = ''
     begin
       res = get_statuses(page)
@@ -125,7 +123,6 @@ class StatusesController < ApplicationController
     @first_month = time.year * 12 + time.month-1
     @total_days = (Time.now - time).to_i / 1.day
     @counter = res["total_number"]
-    @source_raw = @source_raw.sort {|a,b| b[1] <=> a[1] }
   end
   
   def analyze_time(res)
