@@ -63,9 +63,11 @@ Morris.Donut({
 
 <p>
 评论我最多
-  <%= @max_comments_user_name %> <%= @max_comments_user %>次
+  <%= link_to @max_comments_user['screen_name'],"http://weibo.com/#{@max_comments_user['profile_url']}" %>
+  <%= @max_comments_user_count %>次
 @我最多
-  <%= @max_mentions_user_name %> <%= @max_mentions_user %>次  
+  <%= link_to @max_mentions_user['screen_name'],"http://weibo.com/#{@max_mentions_user['profile_url']}" %>
+<%= @max_mentions_user_count %>次  
 </p>
   
       </div>

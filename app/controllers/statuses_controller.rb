@@ -28,10 +28,10 @@ class StatusesController < ApplicationController
   def analyze_comment(res)
     res["comments"].each do |comments|
       user = comments["user"]
-      if @comment_count.has_key?(user["screen_name"])
-       @comment_count[user["screen_name"]] += 1
+      if @comment_count.has_key?(user)
+       @comment_count[user] += 1
       else
-       @comment_count.store(user["screen_name"],1)
+       @comment_count.store(user,1)
       end
     end
   end
@@ -39,10 +39,17 @@ class StatusesController < ApplicationController
   def analyze_mention(res)
     res["comments"].each do |comments|
       user = comments["user"]
+=begin
       if @mention_count.has_key?(user["screen_name"])
         @mention_count[user["screen_name"]] += 1
       else
         @mention_count.store(user["screen_name"],1)
+      end
+=end
+      if @mention_count.has_key?(user)
+        @mention_count[user] += 1
+      else
+        @mention_count.store(user,1)
       end
     end
   end
@@ -60,7 +67,7 @@ class StatusesController < ApplicationController
   end
 
   def comments
-    @max_comments_user = 0
+    @max_comments_user_count = 0
     @comment_count = Hash.new
     page = 1
     res = ''
@@ -70,15 +77,15 @@ class StatusesController < ApplicationController
       analyze_comment(res)
     end while res["total_number"] > (page - 1) * 100
     @comment_count.each_pair do |k,v|
-      if v > @max_comments_user 
-        @max_comments_user = v
-        @max_comments_user_name = k
+      if v > @max_comments_user_count
+        @max_comments_user_count = v
+        @max_comments_user = k
       end
     end
   end
 
   def mentions
-    @max_mentions_user = 0
+    @max_mentions_user_count = 0
     @mention_count = Hash.new
     page = 1
     res = ''
@@ -88,9 +95,9 @@ class StatusesController < ApplicationController
       analyze_mention(res)
     end while res["total_number"] > (page - 1) * 100
     @mention_count.each_pair do |k,v|
-      if v > @max_mentions_user
-        @max_mentions_user = v
-        @max_mentions_user_name = k
+      if v > @max_mentions_user_count
+        @max_mentions_user_count = v
+        @max_mentions_user = k
       end
     end
   end
@@ -143,7 +150,6 @@ class StatusesController < ApplicationController
 
   def analyze_source(res)
     res["statuses"].each do |status|
-      # 如果画图的话需要删除tag..不知到要不要加这个功能
       @source_raw[status["source"]] += 1
       status["source"].gsub!(/<.+?>/,'')
       if @source.has_key?(status["source"])
