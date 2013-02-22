@@ -53,10 +53,10 @@
 
   <li class="span1">
     
-         <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail" %>
+         <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail",:target => "_blank" %>
   </li>
   <li class="span4"> <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
-          <span><p >微博数: <%= user['statuses_count'] %></p></span></li>
+          <br/><br/>微博数  <%= user['statuses_count'] %></li>
 </ul>
          
         </div>
@@ -68,14 +68,36 @@
       <% index = 0 %>
       <% @users_by_followers.each do |user|%>
         <div class='user-by-follower-count userlist'>
-          <% index += 1 %> 
-          <div class="rank">
-            <%= index %>
+           
+          
+          <ul class="thumbnails">
+             <li class="span1">
+              <% index += 1 %> 
+             <div class="rank">
+              <% if index == 1%>
+             <span class="badge badge-important">1</span>
+             <% elsif index == 2 %>
+             <span class="badge badge-warning">2</span>
+            <% elsif index == 3%>
+            <span class="badge badge-success">3</span>
+               <%else%>
+           
+          
+            <span class="badge"><%= index %></span>
           </div>
-          <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
+          <% end%>
+           
+        </li>
+
+  <li class="span1">
+    
+          <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail",:target => "_blank"  %></li>
+         
+          <li>
           <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
-          粉丝数
-          <%= user['followers_count'] %>
+           <br/><br/>粉丝数
+          <%= user['followers_count'] %></li>
+        </ul>
         </div>
       <% end %>
       <div id="follower-page"></div>
