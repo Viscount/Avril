@@ -22,8 +22,6 @@
   				<li><%= link_to '分析我关注的人', friends_path %></li>
   				<li><%= link_to '分析我的粉丝', followers_path %></li>
   				<li><%= link_to '我的微博分析', statuses_path %></li>
-
-              
                 
             </ul>
              <form class="navbar-form pull-right">
@@ -31,7 +29,7 @@
                <ul class="nav">
                 
                
-                  <li style="padding-top:5px;">登出</li>
+                 <li><%= link_to '取消授权', "http://app.weibo.com/my"%></li>
             
               </ul>
              <!--  <input class="span2" type="text" placeholder="学号/工号">
