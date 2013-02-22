@@ -1,49 +1,54 @@
-
 <div class="row">
-      <div class="span3 bs-docs-sidebar">
-        <ul class="nav nav-tabs nav-stacked">
-        <li><a tabindex="-1" href="#">省份分布</a></li>
-        <li><a tabindex="-1" href="#">男女比例</a></li>
-        <li><a tabindex="-1" href="#">发布微博最多</a></li>
-        <li><a tabindex="-1" href="#">拥有粉丝最多</a></li>
+  <div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-tabs nav-stacked">
+      <li><a tabindex="-1" href="#">省份分布</a></li>
+      <li><a tabindex="-1" href="#">男女比例</a></li>
+      <li><a tabindex="-1" href="#">发布微博最多</a></li>
+      <li><a tabindex="-1" href="#">拥有粉丝最多</a></li>
     </ul>
+  </div>
+  <div class="span9">
+    <div id="provinces" style="height: 300px;"> </div>
+    <div id="genders" style="height: 300px;"> </div>
+    <script>
+    Morris.Donut({
+      element: 'provinces',
+      data: <%= to_morris_data(@provinces) %>
+    })
+    Morris.Donut({
+      element: 'genders',
+      data: <%= to_morris_data(@genders) %>
+    })
+    </script>
+    <% index = 0 %>
+    <% @users_by_statuses.each do |user|%>
+      <div class='user-by-status-count userlist'>
+        <% index += 1 %> 
+        <div class="rank">
+          <%= index %>
+        </div>
+        <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
+        <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
+        状态数
+        <%= user['statuses_count'] %>
       </div>
-      <div class="span9">
-          <div id="provinces" style="height: 300px;"> </div>
-<div id="genders" style="height: 300px;"> </div>
-<script>
-Morris.Donut({
-  element: 'provinces',
-  data: <%= to_morris_data(@provinces) %>
-})
-Morris.Donut({
-  element: 'genders',
-  data: <%= to_morris_data(@genders) %>
-})
-</script>
-<%= @counter %>
-<%= @res %>
-<% @users_by_statuses.each do |user|%>
-  <p class='user-by-status-count'>
-    <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
-    <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
-    状态数
-    <%= user['statuses_count'] %>
-  </p>
-<% end %>
-<div id="status-page"></div>
-<% @users_by_followers.each do |user|%>
-  <p class='user-by-follower-count'>
-    <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
-    <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
-    粉丝数
-    <%= user['followers_count'] %>
-  </p>
-<% end %>
-<div id="follower-page"></div>
+    <% end %>
+    <div id="status-page"></div>
+    <% index = 0 %>
+    <% @users_by_followers.each do |user|%>
+      <div class='user-by-follower-count userlist'>
+        <% index += 1 %> 
+        <div class="rank">
+          <%= index %>
+        </div>
+        <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}" %>
+        <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
+        粉丝数
+        <%= user['followers_count'] %>
       </div>
-</div>
-<div id='user_statuses_content'>
+    <% end %>
+    <div id="follower-page"></div>
+  </div>
 </div>
 <script>
   $('#status-page').bootpag({
