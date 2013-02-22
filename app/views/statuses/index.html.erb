@@ -51,15 +51,15 @@ Morris.Donut({
 <p>第一条微博
   <%= render partial: 'weibo', locals: { weibo: @first_status } %>
 <br>
-<%= @total_days %>
-每日状态数<%= (@counter.to_f / @total_days).round(2) %>
+您已经注册微博<%= @total_days %>天
+平均每日状态数<%= (@counter.to_f / @total_days).round(2) %>
 
-<p>
+<ul class="source-list">
 来源
-  <% @source.each_pair do |k,v| %>
-  <li><%= raw(k) %> <%= v %>次</li>
+  <% @source_raw.each do |k| %>
+  <li><%= raw(k[0]) %> <%= k[1] %>次</li>
   <% end %>
-</p>
+</ul>
 
 <p>
 评论我最多

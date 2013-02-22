@@ -102,6 +102,7 @@ class StatusesController < ApplicationController
     @max_attitudes_count = 0
     page = 1
     @statuses = Array.new(24){0}
+    @source_raw = Hash.new(0)
     @source = Hash.new
     @source.default = 0
     res = ''
@@ -117,6 +118,7 @@ class StatusesController < ApplicationController
     @first_month = time.year * 12 + time.month-1
     @total_days = (Time.now - time).to_i / 1.day
     @counter = res["total_number"]
+    @source_raw = @source_raw.sort {|a,b| b[1] <=> a[1] }
   end
   
   def analyze_time(res)
@@ -142,6 +144,7 @@ class StatusesController < ApplicationController
   def analyze_source(res)
     res["statuses"].each do |status|
       # 如果画图的话需要删除tag..不知到要不要加这个功能
+      @source_raw[status["source"]] += 1
       status["source"].gsub!(/<.+?>/,'')
       if @source.has_key?(status["source"])
        @source[status["source"]] += 1
