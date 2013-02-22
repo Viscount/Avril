@@ -1,2 +1,12 @@
-  <%= weibo['text'] %> <%= weibo['created_at']%>
-  <%= link_to '原始微博', go(session['uid'], weibo['id'].to_s) %>
+<div class="weibo">
+  <div class="avatar">
+    <%= link_to image_tag(weibo['user']['profile_image_url']), "http://weibo.com/#{weibo['user']['profile_url']}" %>
+  </div>
+  <div class="weibo-detail">
+    <%= link_to weibo['user']['screen_name'], "http://weibo.com/#{weibo['user']['profile_url']}"%>
+    <br>
+    <%= weibo['text'] %>
+    <br>
+    <%= link_to weibo['created_at'], go(session['uid'], weibo['id'].to_s) %>
+  </div>
+</div>
