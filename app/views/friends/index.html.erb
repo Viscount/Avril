@@ -13,7 +13,7 @@
       <div id="provinces" class="chart"/>
     </section>
     <section id="男女比例">
-      <h1>男女比例</h1>
+      <div class="page-header"><h1>男女比例</h1></div>
       <div id="genders" class="chart"/>
     </section>
     <script>
@@ -27,7 +27,7 @@
     })
     </script>
     <section id="users-by-status">
-      <h1>用户发布微博数量排名</h1>
+      <div class="page-header"><h1>用户发布微博数量排名</h1></div>
       <% index = 0 %>
       <% @users_by_statuses.each do |user|%>
         <div class='user-by-status-count userlist'>
@@ -44,7 +44,7 @@
       <div id="status-page"></div>
     </section>
     <section id='users-by-follower'>
-      <h1>用户粉丝数量排名</h1>
+      <div class="page-header"><h1>用户粉丝数量排名</h1></div>
       <% index = 0 %>
       <% @users_by_followers.each do |user|%>
         <div class='user-by-follower-count userlist'>
