@@ -2,7 +2,7 @@
 class ConnectController < ApplicationController
   before_filter :connected_user, except: [:new, :callback]
   def index
-    @res = get("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&uid=#{session['uid']}")
+    @user = get("https://api.weibo.com/2/users/show.json?access_token=#{session['access_token']}&uid=#{session['uid']}")
   end
   
   # 请求授权

@@ -1,1 +1,7 @@
-注册于 <%= @res['created_at'] %>
+注册于 <%= @user['created_at'] %>
+<%= link_to image_tag(@user['profile_image_url']), "http://weibo.com/#{@user['profile_url']}",:class=>"thumbnail" %>
+  <li class="span4"> <%= link_to @user['screen_name'], "http://weibo.com/#{@user['profile_url']}"%>
+          <span><p >微博数: <%= @user['statuses_count'] %></p></span></li>
+<%= @user['friends_count'] %>
+<%= @user['followers_count'] %>
+
