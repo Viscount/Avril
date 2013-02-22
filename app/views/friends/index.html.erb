@@ -52,7 +52,8 @@
 </div>
 <script>
   $('#status-page').bootpag({
-      total: <%= (@counter / 10.0).ceil %>
+      total: <%= (@counter / 10.0).ceil %>,
+      maxVisible: 10 
   }).on("page", function(event, num){
       $(".user-by-status-count").css("display","none");
       $(".user-by-status-count").slice((num-1)*10, num*10).css("display","");
@@ -61,6 +62,7 @@
   $(".user-by-status-count").slice(0, 10).css("display","");
 
   $('#follower-page').bootpag({
+      maxVisible: 10,
       total: <%= (@counter / 10.0).ceil %>
   }).on("page", function(event, num){
       $(".user-by-follower-count").css("display","none");
