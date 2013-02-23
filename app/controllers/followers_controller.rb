@@ -6,11 +6,19 @@ class FollowersController < ApplicationController
     @counter = 0  # 总人数
     @provinces = Hash.new(0)
     @genders = Hash.new(0)
+    @users = Array.new
     begin
       res = get_followers(cursor)
       cursor += 200
       analyze(res)
     end while res["next_cursor"] > 0
+    @users_by_created_at = @users.sort {|a, b| 
+      DateTime.strptime(a['created_at'], '%a %b %e %T %z %Y') <=> DateTime.strptime(b['created_at'], '%a %b %e %T %z %Y')}
+    @users_by_created_at = @users_by_created_at[0..19]
+    #@genders['男'] = @genders['m']
+    #@genders['女'] = @genders['f']
+    #@genders.delete('m');
+    #@genders.delete('f');
   end
 
   def get_followers(cursor = 0)
@@ -36,6 +44,8 @@ class FollowersController < ApplicationController
       @provinces[get_name(user["province"])] += 1
       @genders[user["gender"]] += 1
       @counter += 1
+      @users << user
     end
+
   end
 end

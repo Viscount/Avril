@@ -1,9 +1,11 @@
 <div class="weibo">
   <div class="avatar">
-    <span class="span1" style="padding:5px;"><%= link_to image_tag(weibo['user']['profile_image_url']), "http://weibo.com/#{weibo['user']['profile_url']}",:class=>"thumbnail",:target => "_blank"  %></span>
+    <span class="span1" style="padding:5px;"><%= link_to image_tag(weibo['user']['profile_image_url']), "http://weibo.com/#{weibo['user']['profile_url']}",:class=>"thumbnail",:target => "_blank"  %>
+    </span>
   </div>
   <div class="weibo-detail">
-    <%= link_to weibo['user']['screen_name'], "http://weibo.com/#{weibo['user']['profile_url']}",:target => "_blank" %>
+    <%= link_to weibo['user']['screen_name'], "http://weibo.com/#{weibo['user']['profile_url']}",  
+    :target => "_blank" %>
     <br>
     <%= link_to weibo['text'] , go(session['uid'], weibo['id'].to_s),:target => "_blank" %>
     <br>

@@ -19,7 +19,7 @@ class FriendsController < ApplicationController
       b['followers_count'] <=> a['followers_count']}
     @users_by_created_at = @users.sort {|a, b| 
       DateTime.strptime(a['created_at'], '%a %b %e %T %z %Y') <=> DateTime.strptime(b['created_at'], '%a %b %e %T %z %Y')}
-
+    @users_by_created_at = @users_by_created_at[0..19]
     @provinces['其他'] = @provinces[nil]
     @provinces.delete(nil)
 

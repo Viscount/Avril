@@ -24,10 +24,25 @@
     <section id="微博来源统计">
       <div class="page-header"><h1>微博来源统计</h1></div>
       <div id="sources" style="height: 300px;"> </div>
-      <ul class="source-list">
-        <% @source_raw.each do |k| %>
-        <li><%= raw(k[0]) %> <%= k[1] %>次</li>
+      <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>来源</th>
+                  <th>次数</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @source_raw.each do |k| %>
+                <tr>
+                <td><%= raw(k[0]) %></td>
+                 <td><%= k[1] %>次</td>
+               </tr>
         <% end %>
+                
+              </tbody>
+            </table>
+      <ul class="source-list">
+        
       </ul>
     </section>
     <section id="评论最多">
@@ -59,20 +74,42 @@
     </section>
     <section id="谁最关心我">
       <div class="page-header"><h1>谁最关心我</h1></div>
-      <h2>评论我最多</h2>
+      <div class="row">
+  <div class="span5">
+          <table class="table table-striped">
+             <thead>
+                <tr>
+                  <th>排名</th>
+                  <th>   朋友</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% index = 0%>
+                <% 5.times do |k| %>
+                <% index = index+1 %>
+                <tr><td><%= index%></td>
+       <td> <span class="span1"><%= link_to image_tag(@close_friends[k][0]['profile_image_url']), "http://weibo.com/#{@close_friends[k][0]['profile_url']}",:class=>"thumbnail",:target => "_blank"%>   </span>
+           <%= link_to @close_friends[k][0]['screen_name'],"http://weibo.com/#{@close_friends[k][0]['profile_url']}" %></td>
+        </tr>
+        <% end %>
+               
+                
+              </tbody>
+            </table>
+      
+      </div>
+  <div class="span3"><h4>评论我最多</h4>
         <%= link_to image_tag(@max_comments_user['profile_image_url']), "http://weibo.com/#{@max_comments_user['profile_url']}" %>
         <%= link_to @max_comments_user['screen_name'],"http://weibo.com/#{@max_comments_user['profile_url']}" %>
         <%= @max_comments_user_count %>次
-      <h2>@我最多</h2>
+        <br/><br/>
+      <h4>@我最多</h4>
         <%= link_to image_tag(@max_mentions_user['profile_image_url']), "http://weibo.com/#{@max_mentions_user['profile_url']}" %>
         <%= link_to @max_mentions_user['screen_name'],"http://weibo.com/#{@max_mentions_user['profile_url']}" %>
-      <%= @max_mentions_user_count %>次  
+      <%= @max_mentions_user_count %>次</div>
+</div>  
     </section>
-        <% 5.times do |k| %>
-        <%= link_to image_tag(@close_friends[k][0]['profile_image_url']), "http://weibo.com/#{@close_friends[k][0]['profile_url']}" %>
-        <%= link_to @close_friends[k][0]['screen_name'],"http://weibo.com/#{@close_friends[k][0]['profile_url']}" %>
         
-        <% end %>
     </div>
 </div>
 <script>

@@ -3,6 +3,7 @@
     <ul class="nav nav-tabs nav-stacked affix nav-left">
       <li><a tabindex="-1" href="#省份分布">省份分布</a></li>
       <li><a tabindex="-1" href="#男女比例">男女比例</a></li>
+      <li><a tabindex="-1" href="#微博年龄排行">微博年龄排行</a></li>
       <li><a tabindex="-1" href="#users-by-status">发布微博最多</a></li>
       <li><a tabindex="-1" href="#users-by-follower">拥有粉丝最多</a></li>
     </ul>
@@ -26,11 +27,34 @@
       data: <%= to_morris_data(@genders) %>
     })
     </script>
-    <% @users_by_created_at.each do |user| %>
-      <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail",:target => "_blank" %>>
-  <li class="span4"> <%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%>
-      <%= user['created_at'] %>
+    <section id="微博年龄排行">
+      <div class="page-header"><h1>微博年龄排行</h1></div>
+   
+    </section>
+     <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>博主</th>
+                  <th>注册日期</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <% @users_by_created_at.each do |user| %>
+     
+ <tr><td> <ul class="thumbnails">
+    <li class="span1"> <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail",:target => "_blank" %></li>
+            <li>
+
+      <li><%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%></li>
+      </ul></td>
+      <td>  <%= user['created_at'] %></td></tr>
+    
+ 
     <% end %>
+                
+              </tbody>
+            </table>
+   
     <section id="users-by-status">
       <div class="page-header"><h1>用户发布微博数量排名</h1></div>
       <% index = 0 %>

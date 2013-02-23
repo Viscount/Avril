@@ -2,24 +2,60 @@
 <div class="row">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-tabs nav-stacked">
-  			<li><a tabindex="-1" href="#">省份分布</a></li>
-  			<li><a tabindex="-1" href="#">男女比例</a></li>
-  			<li><a tabindex="-1" href="#">微博年龄</a></li>
-  			<li><a tabindex="-1" href="#">关系最密切</a></li>
+  			 <li><a tabindex="-1" href="#省份分布">省份分布</a></li>
+      <li><a tabindex="-1" href="#男女比例">男女比例</a></li>
+      <li><a tabindex="-1" href="#微博年龄排行">微博年龄排行</a></li>
 		</ul>
       </div>
       <div class="span9">
+      	<section id="省份分布">
+      <div class="page-header"><h1>省份分布</h1></div>
+      <div id="provinces" class="chart"/>
+    </section>
+    <section id="男女比例">
+      <div class="page-header"><h1>男女比例</h1></div>
+      <div id="genders" class="chart"/>
+    </section>
+    <section id="微博年龄排行">
+      <div class="page-header"><h1>微博年龄排行</h1></div>
+   
+    </section>
+     <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>博主</th>
+                  <th>注册日期</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <% @users_by_created_at.each do |user| %>
+     
+ <tr><td> <ul class="thumbnails">
+    <li class="span1"> <%= link_to image_tag(user['profile_image_url']), "http://weibo.com/#{user['profile_url']}",:class=>"thumbnail",:target => "_blank" %></li>
+            <li>
 
-      	<div id="provinces" style="height: 500px;"> </div>
+      <li><%= link_to user['screen_name'], "http://weibo.com/#{user['profile_url']}"%></li>
+      </ul></td>
+      <td>  <%= user['created_at'] %></td></tr>
+    
+ 
+    <% end %>
+                
+              </tbody>
+            </table>
+      	
+
 <script>
 Morris.Donut({
   element: 'provinces',
   data: <%= to_morris_data(@provinces) %>
 })
+Morris.Donut({
+      element: 'genders',
+      data: <%= to_morris_data(@genders) %>
+    })
 </script>
-<%= @genders %>
-<%= @counter %>
-<%= @res %>
+
 
       </div>
 </div>
